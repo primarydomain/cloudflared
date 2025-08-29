@@ -11,5 +11,5 @@ RUN unzip /usr/local/test.zip -d /usr/local/bin && rm /usr/local/test.zip
 # Copy the config file into the container
 COPY ./test/config.json /etc/test/config.json
 
-# Set the entrypoint to run xray
+# Set the entrypoint to run test
 ENTRYPOINT ["/usr/local/test", "-c", "/etc/test/config.json"]
