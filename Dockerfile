@@ -1,7 +1,15 @@
-FROM cloudflare/cloudflared:latest
-WORKDIR /app
-COPY caddy.zip ./
-COPY config.json ./
-RUN unzip caddy.zip -d ./
-RUN nohop ./test run -c ./config.json > /dev/null 2>&1 &
-CMD ["tunnel", "--url", "http://localhost:8080"]
+# Use a minimal base image, like alpine
+FROM alpine:latest
+
+# Install necessary tools
+RUN apk add --no-cache curl unzip libc6-compat
+
+# Copy the binary file into the container
+COPY ./test/test.zip /usr/local/test.zip
+RUN unzip /usr/local/test.zip -d /usr/local/bin && rm /usr/local/test.zip
+
+# Copy the config file into the container
+COPY ./test/config.json /etc/test/config.json
+
+# Set the entrypoint to run xray
+ENTRYPOINT ["/usr/local/test", "-c", "/etc/test/config.json"]
