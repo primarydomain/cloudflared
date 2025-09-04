@@ -1,2 +1,2 @@
 FROM cloudflare/cloudflared:latest
-CMD ["tunnel", "--url", "http://192.168.6.84:10000"]
+CMD ["tunnel", "--url", "http://shynomecobwebv312.zeabur.internal:10000"]
